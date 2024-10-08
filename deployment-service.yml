@@ -26,8 +26,9 @@ kind: Service
 metadata:
   name: bloggingapp-ssvc
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: "application"  # Specify ALB
-    service.beta.kubernetes.io/aws-load-balancer-internal: "false"  
+    service.beta.kubernetes.io/aws-load-balancer-type: "alb"  # Specify ALB
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"  # Change to "internal" if you want it to be internal
+    service.beta.kubernetes.io/aws-load-balancer-listen-ports: '[{"HTTP": 80}'
 spec:
   selector:
     app: bloggingapp
@@ -35,4 +36,4 @@ spec:
     - protocol: "TCP"
       port: 80
       targetPort: 8080 
-  type: NodePort
+  type: LoadBalancer
